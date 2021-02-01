@@ -1,0 +1,80 @@
+//implement your 32-bit ALU
+module alu32(out, overflow, zero, negative, A, B, control);
+    output [31:0] out;
+    output        overflow, zero, negative;
+    input  [31:0] A, B;
+    input   [2:0] control;
+
+    wire [31:1] chain;
+    wire [31:0] carryout;
+
+    alu1 alu1_0(out[0], carryout[0], A[0], B[0], control[0], control);
+    alu1 alu1_1(out[1], carryout[1], A[1], B[1], carryout[0], control);
+    alu1 alu1_2(out[2], carryout[2], A[2], B[2], carryout[1], control);
+    alu1 alu1_3(out[3], carryout[3], A[3], B[3], carryout[2], control);
+    alu1 alu1_4(out[4], carryout[4], A[4], B[4], carryout[3], control);
+    alu1 alu1_5(out[5], carryout[5], A[5], B[5], carryout[4], control);
+    alu1 alu1_6(out[6], carryout[6], A[6], B[6], carryout[5], control);
+    alu1 alu1_7(out[7], carryout[7], A[7], B[7], carryout[6], control);
+    alu1 alu1_8(out[8], carryout[8], A[8], B[8], carryout[7], control);
+    alu1 alu1_9(out[9], carryout[9], A[9], B[9], carryout[8], control);
+    alu1 alu1_10(out[10], carryout[10], A[10], B[10], carryout[9], control);
+    alu1 alu1_11(out[11], carryout[11], A[11], B[11], carryout[10], control);
+    alu1 alu1_12(out[12], carryout[12], A[12], B[12], carryout[11], control);
+    alu1 alu1_13(out[13], carryout[13], A[13], B[13], carryout[12], control);
+    alu1 alu1_14(out[14], carryout[14], A[14], B[14], carryout[13], control);
+    alu1 alu1_15(out[15], carryout[15], A[15], B[15], carryout[14], control);
+    alu1 alu1_16(out[16], carryout[16], A[16], B[16], carryout[15], control);
+    alu1 alu1_17(out[17], carryout[17], A[17], B[17], carryout[16], control);
+    alu1 alu1_18(out[18], carryout[18], A[18], B[18], carryout[17], control);
+    alu1 alu1_19(out[19], carryout[19], A[19], B[19], carryout[18], control);
+    alu1 alu1_20(out[20], carryout[20], A[20], B[20], carryout[19], control);
+    alu1 alu1_21(out[21], carryout[21], A[21], B[21], carryout[20], control);
+    alu1 alu1_22(out[22], carryout[22], A[22], B[22], carryout[21], control);
+    alu1 alu1_23(out[23], carryout[23], A[23], B[23], carryout[22], control);
+    alu1 alu1_24(out[24], carryout[24], A[24], B[24], carryout[23], control);
+    alu1 alu1_25(out[25], carryout[25], A[25], B[25], carryout[24], control);
+    alu1 alu1_26(out[26], carryout[26], A[26], B[26], carryout[25], control);
+    alu1 alu1_27(out[27], carryout[27], A[27], B[27], carryout[26], control);
+    alu1 alu1_28(out[28], carryout[28], A[28], B[28], carryout[27], control);
+    alu1 alu1_29(out[29], carryout[29], A[29], B[29], carryout[28], control);
+    alu1 alu1_30(out[30], carryout[30], A[30], B[30], carryout[29], control);
+    alu1 alu1_31(out[31], carryout[31], A[31], B[31], carryout[30], control);
+    
+    or o_1(chain[1], out[1], out[0]);
+    or o_2(chain[2], out[2], chain[1]);
+    or o_3(chain[3], out[3], chain[2]);
+    or o_4(chain[4], out[4], chain[3]);
+    or o_5(chain[5], out[5], chain[4]);
+    or o_6(chain[6], out[6], chain[5]);
+    or o_7(chain[7], out[7], chain[6]);
+    or o_8(chain[8], out[8], chain[7]);
+    or o_9(chain[9], out[9], chain[8]);
+    or o_10(chain[10], out[10], chain[9]);
+    or o_11(chain[11], out[11], chain[10]);
+    or o_12(chain[12], out[12], chain[11]);
+    or o_13(chain[13], out[13], chain[12]);
+    or o_14(chain[14], out[14], chain[13]);
+    or o_15(chain[15], out[15], chain[14]);
+    or o_16(chain[16], out[16], chain[15]);
+    or o_17(chain[17], out[17], chain[16]);
+    or o_18(chain[18], out[18], chain[17]);
+    or o_19(chain[19], out[19], chain[18]);
+    or o_20(chain[20], out[20], chain[19]);
+    or o_21(chain[21], out[21], chain[20]);
+    or o_22(chain[22], out[22], chain[21]);
+    or o_23(chain[23], out[23], chain[22]);
+    or o_24(chain[24], out[24], chain[23]);
+    or o_25(chain[25], out[25], chain[24]);
+    or o_26(chain[26], out[26], chain[25]);
+    or o_27(chain[27], out[27], chain[26]);
+    or o_28(chain[28], out[28], chain[27]);
+    or o_29(chain[29], out[29], chain[28]);
+    or o_30(chain[30], out[30], chain[29]);
+    or o_31(chain[31], out[31], chain[30]);
+
+    not n0(zero, chain[31]);
+    assign negative = out[31];
+    xor x0(overflow, carryout[30], carryout[31]);
+
+endmodule // alu32
